@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * ImmichFrame.WebApi
  * 1.0
@@ -211,6 +210,7 @@ export type ClientSettingsDto = {
     imageZoom?: boolean;
     imagePan?: boolean;
     imageFill?: boolean;
+    preloadNeighbors?: boolean;
     playAudio?: boolean;
     layout?: string | null;
     language?: string | null;

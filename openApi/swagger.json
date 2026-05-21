@@ -932,6 +932,9 @@
           "imageFill": {
             "type": "boolean"
           },
+          "preloadNeighbors": {
+            "type": "boolean"
+          },
           "playAudio": {
             "type": "boolean"
           },

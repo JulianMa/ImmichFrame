@@ -54,6 +54,7 @@ public class ServerSettingsV1 : IConfigSettable
     public bool ImageZoom { get; set; } = true;
     public bool ImagePan { get; set; } = false;
     public bool ImageFill { get; set; } = false;
+    public bool PreloadNeighbors { get; set; } = false;
     public bool PlayAudio { get; set; } = false;
     public string Layout { get; set; } = "splitview";
 }
@@ -132,6 +133,7 @@ public class ServerSettingsV1Adapter(ServerSettingsV1 _delegate) : IServerSettin
         public bool ImageZoom => _delegate.ImageZoom;
         public bool ImagePan => _delegate.ImagePan;
         public bool ImageFill => _delegate.ImageFill;
+        public bool PreloadNeighbors => _delegate.PreloadNeighbors;
         public bool PlayAudio => _delegate.PlayAudio;
         public string Layout => _delegate.Layout;
         public string Language => _delegate.Language;
