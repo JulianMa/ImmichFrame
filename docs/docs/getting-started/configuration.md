@@ -113,6 +113,9 @@ General:
   ImagePan: false  # boolean
   # Whether image should fill available space. Aspect ratio maintained but may be cropped.
   ImageFill: false  # boolean
+  # Keep the next and previous images mounted (hidden) so the browser pre-decodes them and avoids
+  # a brief black frame during transitions on low-powered hardware. Costs extra GPU memory.
+  PreloadNeighbors: false  # boolean
   # Whether to play audio for videos that have audio tracks.
   PlayAudio: false  # boolean
   # Allow two portrait images to be displayed next to each other

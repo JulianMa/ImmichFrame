@@ -14,6 +14,7 @@
 
 	interface Props {
 		assets: [string, AssetResponseDto, api.AssetFaceResponseDto[], api.AlbumResponseDto[]][];
+		preloadAssets?: [string, AssetResponseDto, api.AlbumResponseDto[]][];
 		interval?: number;
 		error?: boolean;
 		loaded?: boolean;
@@ -37,6 +38,7 @@
 
 	let {
 		assets,
+		preloadAssets = [],
 		interval = 20,
 		error = false,
 		loaded = false,
@@ -181,6 +183,16 @@
 			{/if}
 		</div>
 	{/key}
+	{#each preloadAssets as [url, asset] (asset.id)}
+		<img
+			src={url}
+			alt=""
+			aria-hidden="true"
+			class="absolute inset-0 w-full h-full opacity-0 pointer-events-none -z-10"
+			class:object-cover={imageFill}
+			class:object-contain={!imageFill}
+		/>
+	{/each}
 {:else}
 	<div class="grid absolute h-dvh-safe w-screen">
 		<LoadingElement />

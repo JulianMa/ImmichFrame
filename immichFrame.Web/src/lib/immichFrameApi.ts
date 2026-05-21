@@ -291,6 +291,7 @@ export type ClientSettingsDto = {
     imageZoom?: boolean;
     imagePan?: boolean;
     imageFill?: boolean;
+    preloadNeighbors?: boolean;
     playAudio?: boolean;
     layout?: string | null;
     language?: string | null;
