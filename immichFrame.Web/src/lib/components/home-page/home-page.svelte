@@ -33,7 +33,6 @@
 	let assetBacklog: api.AssetResponseDto[] = [];
 
 	let displayingAssets: api.AssetResponseDto[] = $state([]);
-	let preloadAssets: [string, api.AssetResponseDto, api.AlbumResponseDto[]][] = $state([]);
 
 	const { restartProgress, stopProgress, instantTransition } = slideshowStore;
 
@@ -48,6 +47,13 @@
 	let authError: boolean = $state(false);
 	let errorMessage: string = $state('');
 	let assetsState: AssetsState = $state({
+		assets: [],
+		error: false,
+		loaded: false,
+		split: false,
+		hasBday: false
+	});
+	let nextAssetsState: AssetsState = $state({
 		assets: [],
 		error: false,
 		loaded: false,
@@ -131,30 +137,34 @@
 		}
 	}
 
-	async function pickPreloadAssets() {
-		if (!$configStore.preloadNeighbors) return [];
-
-		const useSplitNext = shouldUseSplitView(assetBacklog.slice(0, 2));
-		const nextCount = useSplitNext ? 2 : 1;
-		const useSplitPrev = shouldUseSplitView(assetHistory.slice(-2));
-		const prevCount = useSplitPrev ? 2 : 1;
-
-		const candidates: api.AssetResponseDto[] = [
-			...assetBacklog.slice(0, nextCount),
-			...assetHistory.slice(-prevCount)
-		].filter(isImageAsset);
-
-		const resolved: [string, api.AssetResponseDto, api.AlbumResponseDto[]][] = [];
-		for (const asset of candidates) {
-			const promise = assetPromisesDict[asset.id];
-			if (!promise) continue;
-			try {
+	async function pickNextAssets(): Promise<AssetsState> {
+		const empty: AssetsState = {
+			assets: [],
+			error: false,
+			loaded: false,
+			split: false,
+			hasBday: false
+		};
+		if (!$configStore.preloadNeighbors || !assetBacklog.length) return empty;
+		const useSplit = shouldUseSplitView(assetBacklog.slice(0, 2));
+		const candidates = assetBacklog.slice(0, useSplit ? 2 : 1);
+		try {
+			const resolved: [string, api.AssetResponseDto, api.AlbumResponseDto[]][] = [];
+			for (const asset of candidates) {
+				const promise = assetPromisesDict[asset.id];
+				if (!promise) return empty;
 				resolved.push(await promise);
-			} catch {
-				// skip failures
 			}
+			return {
+				assets: resolved,
+				error: false,
+				loaded: true,
+				split: candidates.length === 2 && candidates.every(isImageAsset),
+				hasBday: hasBirthday(candidates)
+			};
+		} catch {
+			return empty;
 		}
-		return resolved;
 	}
 
 	async function loadAssets() {
@@ -224,7 +234,7 @@
 		displayingAssets = next;
 		await updateAssetPromises();
 		assetsState = await pickAssets(next);
-		preloadAssets = await pickPreloadAssets();
+		nextAssetsState = await pickNextAssets();
 	}
 
 	async function getPreviousAssets() {
@@ -243,7 +253,7 @@
 		displayingAssets = next;
 		await updateAssetPromises();
 		assetsState = await pickAssets(next);
-		preloadAssets = await pickPreloadAssets();
+		nextAssetsState = await pickNextAssets();
 	}
 
 	function isPortrait(asset: api.AssetResponseDto) {
@@ -496,7 +506,7 @@
 				showTagsDesc={$configStore.showTagsDesc}
 				showAlbumName={$configStore.showAlbumName}
 				{...assetsState}
-				{preloadAssets}
+				nextAssets={nextAssetsState.assets}
 				imageFill={$configStore.imageFill}
 				imageZoom={$configStore.imageZoom}
 				imagePan={$configStore.imagePan}
