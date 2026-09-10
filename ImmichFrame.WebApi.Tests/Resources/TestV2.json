@@ -35,6 +35,7 @@
     "ImageZoom": true,
     "ImagePan": true,
     "ImageFill": true,
+    "PreloadNeighbors": true,
     "PlayAudio": true,
     "Layout": "Layout_TEST"
   },

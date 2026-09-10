@@ -52,6 +52,7 @@ export const generalSections: SectionDef[] = [
 			{ key: 'imageZoom', label: 'Image zoom', type: 'checkbox' },
 			{ key: 'imagePan', label: 'Image pan', type: 'checkbox' },
 			{ key: 'imageFill', label: 'Image fill', type: 'checkbox' },
+			{ key: 'preloadNeighbors', label: 'Preload neighbouring images', type: 'checkbox' },
 			{ key: 'playAudio', label: 'Play audio (videos)', type: 'checkbox' },
 			{ key: 'showProgressBar', label: 'Show progress bar', type: 'checkbox' },
 			{ key: 'primaryColor', label: 'Primary color', type: 'text', placeholder: '#f5deb3' },

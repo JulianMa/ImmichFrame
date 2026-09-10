@@ -44,6 +44,7 @@ public class LiveGeneralSettings(ISettingsProvider _provider) : IGeneralSettings
     public bool ImageZoom => Current.ImageZoom;
     public bool ImagePan => Current.ImagePan;
     public bool ImageFill => Current.ImageFill;
+    public bool PreloadNeighbors => Current.PreloadNeighbors;
     public bool PlayAudio => Current.PlayAudio;
     public string Layout => Current.Layout;
     public string Language => Current.Language;

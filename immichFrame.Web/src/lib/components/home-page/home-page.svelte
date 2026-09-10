@@ -152,7 +152,12 @@
 		const useSplit = shouldUseSplitView(assetBacklog.slice(0, 2));
 		const candidates = assetBacklog.slice(0, useSplit ? 2 : 1);
 		try {
-			const resolved: [string, api.AssetResponseDto, api.AlbumResponseDto[]][] = [];
+			const resolved: [
+				string,
+				api.AssetResponseDto,
+				api.AssetFaceResponseDto[],
+				api.AlbumResponseDto[]
+			][] = [];
 			for (const asset of candidates) {
 				const promise = assetPromisesDict[asset.id];
 				if (!promise) return empty;

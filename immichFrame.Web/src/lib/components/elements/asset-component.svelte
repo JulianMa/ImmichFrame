@@ -13,7 +13,7 @@
 
 	api.init();
 
-	type AssetTuple = [string, AssetResponseDto, api.AlbumResponseDto[]];
+	type AssetTuple = [string, AssetResponseDto, api.AssetFaceResponseDto[], api.AlbumResponseDto[]];
 
 	interface Props {
 		assets: AssetTuple[];

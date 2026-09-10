@@ -55,6 +55,7 @@ export type GeneralSettings = {
     imageZoom?: boolean;
     imagePan?: boolean;
     imageFill?: boolean;
+    preloadNeighbors?: boolean;
     playAudio?: boolean;
     layout?: string | null;
     renewImagesDuration?: number;
